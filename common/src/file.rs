@@ -1,10 +1,9 @@
 use std::{
     io::{self, ErrorKind},
-    path::{ PathBuf},
+    path::PathBuf,
 };
 
 pub fn file_name_with_suffix(base_file: PathBuf, suffix: &str) -> Result<String, io::Error> {
-
     let file_name = base_file
         .file_stem()
         .and_then(|s| s.to_str())
