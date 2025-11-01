@@ -1,0 +1,11 @@
+[package]
+name = "profit"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+domain = { path = "../domain" }
+common = { path = "../common" }
+encoding_rs_io = "0.1"
+encoding_rs = "0.8"
+polars = { version = "0.51", features = ["lazy", "serde", "full","dtype-struct", "temporal","csv"] }

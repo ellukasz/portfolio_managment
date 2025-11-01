@@ -1,0 +1,11 @@
+
+[workspace]
+members = ["cli","common","domain","portfolio_loader/mbank_csv"
+, "profit"]
+
+resolver = "3"
+
+[profile.release]
+opt-level = 3
+debug = false
+panic = 'abort'

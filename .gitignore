@@ -1,0 +1,25 @@
+/target/
+Cargo.lock
+.DS_Store
+*.log
+*.tmp
+*.exe
+# Rust/Cargo
+/target/
+**/target/
+Cargo.lock
+# VSCode
+.vscode/
+# JetBrains
+.idea/
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+# Rust Analyzer
+.rust-analyzer.json
+.rust-analyzer.jsonc
+# Coverage
+/coverage/
+*.profraw
+*.profdata
