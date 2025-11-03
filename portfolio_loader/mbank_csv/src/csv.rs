@@ -27,7 +27,7 @@ pub fn write(conf: &Conf) -> Result<PathBuf, polars::prelude::PolarsError> {
 fn normalize_csv(csv: &Path, conf: &Conf) -> Result<LazyFrame, polars::prelude::PolarsError> {
     let commission_percent = lit(conf.commission_percent);
     let commission_min = lit(conf.commission_min);
-    print!("{}", &commission_percent);
+
     let df = common::polars::default_lazy_reder(csv)
         .with_decimal_comma(true)
         .finish()?;

@@ -3,9 +3,9 @@ use std::path::Path;
 use domain::conf::Conf;
 
 fn main() {
-    let trade_orders_csv = Path::new("C:\\_lukasz\\rust\\data\\trade_orders.csv").to_path_buf();
-    let tmp_directory = Path::new("C:\\_lukasz\\rust\\data\\tmp").to_path_buf();
-    let outpu_directory = Path::new("c:\\_lukasz\\rust\\data\\out").to_path_buf();
+    let trade_orders_csv = Path::new("..\\data\\trade_orders.csv").to_path_buf();
+    let tmp_directory = Path::new("..\\data\\tmp").to_path_buf();
+    let outpu_directory = Path::new("..\\data\\out").to_path_buf();
 
     let commission_percent = 0.039;
     let commission_min = 5.0;
