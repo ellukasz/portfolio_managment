@@ -1,0 +1,9 @@
+[package]
+name = "risk"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+polars = { version = "0.51", features = ["lazy", "serde", "full","dtype-struct", "temporal","csv"] }
+common = { path = "../common" }
+domain = { path = "../domain" }

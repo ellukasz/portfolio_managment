@@ -1,22 +1,24 @@
 use std::fs::File;
 use std::path::Path;
 
-use polars::prelude::SerWriter;
+use domain::conf::Conf;
+use domain::constant::{ROUND, ROUND_MODE};
+use polars::prelude::{PlSmallStr, SerWriter};
 use polars::{
     error::{ErrString, PolarsError},
     frame::DataFrame,
-    prelude::{LazyFileListReader, LazyFrame, RoundMode, col, lit, when},
+    prelude::{LazyFileListReader, LazyFrame, col, lit, when},
 };
 use std::io::Write;
 
-pub fn with_summary(
+pub fn profit_with_summary(
     portfolio_csv: &Path,
-    output_directory: &Path,
+    conf: &Conf,
 ) -> Result<(), polars::prelude::PolarsError> {
     let net_profit_per_ticker = net_profit(portfolio_csv)?;
     let summary = summary(net_profit_per_ticker.clone())?;
 
-    let profit_summary_path = output_directory.join("profit_summary.csv");
+    let profit_summary_path = conf.outpu_directory.join("profit_summary.csv");
 
     let mut file = File::create(profit_summary_path)?;
 
@@ -30,16 +32,23 @@ fn write_net_profit_per_ticker(
     net_profit_per_ticker: LazyFrame,
 ) -> Result<(), polars::prelude::PolarsError> {
     let df = net_profit_per_ticker.collect()?;
-
     let mut selected_col = df.select([
         "ticker",
         "net_profit",
-        "pct_change",
-        "commission_total",
+        "return_of_investment",
+        "cost_basis",
         "tax_amount",
         "buy_quantity",
         "sell_quantity",
+        "buy_commission",
+        "sell_commission",
+        "commission_total",
     ])?;
+
+    selected_col.rename(
+        "return_of_investment",
+        PlSmallStr::from_str("return_of_investment(%)"),
+    )?;
 
     common::polars::default_file_writer(output)?.finish(&mut selected_col)?;
     Ok(())
@@ -77,8 +86,8 @@ fn _money(df: &DataFrame, column: &str) -> Result<f64, PolarsError> {
 }
 
 fn summary(net_profit: LazyFrame) -> Result<LazyFrame, polars::prelude::PolarsError> {
-    let round = 2;
-    let mode = RoundMode::HalfToEven;
+    let round = ROUND;
+    let mode = ROUND_MODE;
 
     let summary = net_profit.clone().select([
         (col("commission_total"))
@@ -99,9 +108,8 @@ fn summary(net_profit: LazyFrame) -> Result<LazyFrame, polars::prelude::PolarsEr
 }
 fn net_profit(portfolio_csv: &Path) -> Result<LazyFrame, polars::prelude::PolarsError> {
     let df = common::polars::default_lazy_reder(portfolio_csv).finish()?;
-
-    let round = 2;
-    let mode = RoundMode::HalfToEven;
+    let round = ROUND;
+    let mode = ROUND_MODE;
 
     let tax_df = df
         .clone()
@@ -109,7 +117,6 @@ fn net_profit(portfolio_csv: &Path) -> Result<LazyFrame, polars::prelude::Polars
             (col("purchase_value") + col("buy_commission")).alias("cost_basis"),
             (col("sale_value") - col("sell_commission")).alias("net_proceeds"),
             (col("buy_commission") + col("sell_commission"))
-                .sum()
                 .round(round, mode)
                 .alias("commission_total"),
         ])
@@ -130,11 +137,9 @@ fn net_profit(portfolio_csv: &Path) -> Result<LazyFrame, polars::prelude::Polars
             .otherwise(lit(0_f64))
             .round(round, mode)
             .alias("net_profit"))])
-        .with_column(
-            ((col("tax_base") / col("cost_basis")) * lit(100))
-                .round(round, mode)
-                .alias("pct_change"),
-        );
+        .with_columns([((col("net_profit") / col("cost_basis")) * lit(100))
+            .round(round, mode)
+            .alias("return_of_investment")]);
 
     Ok(tax_df)
 }

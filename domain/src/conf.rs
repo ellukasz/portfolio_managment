@@ -6,4 +6,5 @@ pub struct Conf {
     pub tmp_directory: PathBuf,
     pub commission_percent: f64,
     pub commission_min: f64,
+    pub upside_csv: PathBuf,
 }

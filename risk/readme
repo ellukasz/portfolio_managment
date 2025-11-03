@@ -1,0 +1,16 @@
+
+CSV Format:
+ticker;upside;current_price;stop_loss_percent;investment_amount;risk
+ZABKA;35.0;21.50;0.05;1000;0.02
+
+ticker
+upside
+current_price
+    -actual stok price
+stop_loss_percent
+2% – 5%: Jest to najczęstszy i zalecany zakres. Używa się go zazwyczaj przy akcjach o umiarkowanej zmienności, w krótszych horyzontach czasowych (swing trading).
+5% – 8%: Stosowane przy akcjach o wyższej zmienności (volatile stocks), gdzie mniejszy Stop Loss mógłby być łatwo "wybity" przez normalny szum rynkowy.
+10% lub więcej: Zazwyczaj stosowane w długoterminowym inwestowaniu (buy-and-hold), gdzie inwestor akceptuje głębsze korekty, ale chce uciec przed drastycznymi spadkami
+
+;investment_amount;
+risk

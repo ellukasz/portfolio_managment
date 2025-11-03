@@ -7,3 +7,4 @@ edition = "2024"
 mbank_csv = { path = "../portfolio_loader/mbank_csv" }
 domain = { path = "../domain" }
 profit = { path = "../profit" }
+risk = { path = "../risk" }
