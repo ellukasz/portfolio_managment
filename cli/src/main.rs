@@ -10,7 +10,7 @@ fn main() {
     let commission_percent = 0.039;
     let commission_min = 5.0;
 
-    let upside_csv = Path::new("c:\\_lukasz\\rust\\data\\upside.csv").to_path_buf();
+    let upside_csv = Path::new("..\\data\\upside.csv").to_path_buf();
 
     let conf = Conf {
         trade_orders_csv,
