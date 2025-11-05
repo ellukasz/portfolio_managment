@@ -18,7 +18,7 @@ pub fn calculate(conf: &Conf) -> Result<(), polars::prelude::PolarsError> {
         "position_size",
         "stop_loss",
         "buy_price",
-        "percentage_stop_loss",
+        "stop_loss_percentage",
     ])?;
 
     common::polars::default_writer(path)?.finish(&mut selected_col)?;
@@ -32,7 +32,7 @@ fn prepare_lf(upside_lf: LazyFrame, conf: &Conf) -> LazyFrame {
     upside_lf
         .clone()
         .with_columns([
-            (col("buy_price") * (lit(1) - col("percentage_stop_loss")))
+            (col("buy_price") * (lit(1) - col("stop_loss_percentage")))
                 .round(ROUND, ROUND_MODE)
                 .alias("stop_loss"),
             (col("capital_total") * col("max_risk_percentage"))
