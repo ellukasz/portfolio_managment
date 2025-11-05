@@ -74,5 +74,5 @@ fn prepare_lf(upside_lf: LazyFrame, conf: &Conf) -> LazyFrame {
         .with_columns([(col("net_profit") / col("risk"))
             .round(ROUND, ROUND_MODE)
             .alias("reward_risk_ratio")])
-        .sort(["ticker"], Default::default())
+        .sort(["reward_risk_ratio"], Default::default())
 }
