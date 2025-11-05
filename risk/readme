@@ -1,7 +1,7 @@
 
 CSV Format:
-ticker;upside;buy_price;percentage_stop_loss;capital_total;max_risk_percentage_per_transaction
-ZABKA;35.0;21.50;0.05;10000;0.02
+ticker;target_price;buy_price;percentage_stop_loss;capital_total;max_risk_percentage
+ZABKA;30.0;20.93;0.05;50000;0.02
 
 percentage_stop_loss
 2% – 5%: Jest to najczęstszy i zalecany zakres. Używa się go zazwyczaj przy akcjach o umiarkowanej zmienności, w krótszych horyzontach czasowych (swing trading).
