@@ -13,6 +13,7 @@ pub fn calculate(conf: &Conf) -> Result<(), polars::prelude::PolarsError> {
 
     let mut selected_col = risk_lf.select([
         "ticker",
+        "target_price",
         "reward_risk_ratio",
         "net_profit",
         "position_size",
