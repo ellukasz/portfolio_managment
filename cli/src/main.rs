@@ -48,5 +48,5 @@ fn main() {
     let filed_trade_orders_csv = mbank_csv::csv::write(&conf).unwrap();
     profit::csv::profit_with_summary(&filed_trade_orders_csv, &conf).unwrap();
 
-    risk::csv::calculate(&conf).unwrap();
+    risk::model_equal_risk::calculate(&conf).unwrap();
 }
